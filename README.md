@@ -26,3 +26,7 @@ The objective is to use a rotary encoder, but to test the programs and the gener
 <img width="1371" height="555" alt="image" src="https://github.com/user-attachments/assets/4e915545-e001-413a-ae2f-c4caa836acd6" />
 
 This is called a pull-up resistance connection. It results that you cant connect te Arduino pin directly to the button and then to the ground or the 5V port because it can't read any information if the button isn't pressed. Also, if you connect the button between the 5V port and the ground port and the digital pin in parallel in the middle of that circuit, you are making a short-circuit.
+
+### Program:
+
+The program can be found on the Arduino UNO file.ino . There is not too much to see. It initializes te serial monitor and writes the word "select" when I press the button

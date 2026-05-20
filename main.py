@@ -13,15 +13,15 @@ for session in sessions:
     if not session.Process:
         continue
 
-    nombre = session.Process.name()
+    name = session.Process.name()
 
-    if nombre not in sesiones_unicas:
-        sesiones_unicas[numero] = session
+    if name not in sesiones_unicas:
+        sesiones_unicas[name] = session
         numero += 1
 
 
 
-for nombre in sesiones_unicas:
-    print(nombre)
+for name in sesiones_unicas:
+    print(name)
 
 print(port)

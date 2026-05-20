@@ -1,4 +1,5 @@
 import serial.tools.list_ports
+import serial
 
 def find_arduino():
     for port in serial.tools.list_ports.comports():
@@ -8,7 +9,27 @@ def find_arduino():
     
 port = find_arduino()
 
-# if port:
-#     print(f"Found Arduino on {port}")
-# else:
-#     print("Arduino not found")
+
+
+ser = serial.Serial(
+    port= port,
+    baudrate=9600,
+    parity=serial.PARITY_NONE,
+    stopbits=serial.STOPBITS_ONE,
+    bytesize=serial.EIGHTBITS,
+    timeout=0
+    )
+
+print("connected to: " + ser.portstr)
+count=1
+
+while True:
+    line = ser.readline()
+    if line:
+        text = line.decode()
+        print(text)
+        
+
+
+
+ser.close()

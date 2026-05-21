@@ -35,4 +35,4 @@ This is called a pull-up resistance connection. It results that you cant connect
 
 #### Program:
 
-The program can be found on the [ArduinoUNO.ino]([ArduinoUNO.ino](https://github.com/ymotkpo3/proyecto-controlador-de-volumen/blob/main/Arduino%20Code/ArduinoUNO.ino)) . There is not too much to see. It initializes te serial monitor and writes the word "select" when I press the button
+The program can be found on the [ArduinoUNO.ino](https://github.com/ymotkpo3/proyecto-controlador-de-volumen/blob/main/Arduino%20Code/ArduinoUNO.ino) . There is not too much to see. It initializes te serial monitor and writes the word "select" when I press the button

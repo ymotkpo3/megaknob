@@ -1,35 +1,24 @@
 import serial.tools.list_ports
 import serial
 
-def find_arduino():
+def find_arduino_port():
     for port in serial.tools.list_ports.comports():
         if 'Arduino' in port.description or 'CH340' in port.description:
             return port.device
     return None
-    
-port = find_arduino()
-
-
 
 ser = serial.Serial(
-    port= port,
+    port= find_arduino_port(),
     baudrate=9600,
     parity=serial.PARITY_NONE,
     stopbits=serial.STOPBITS_ONE,
     bytesize=serial.EIGHTBITS,
-    timeout=0
+    timeout=2
     )
 
-print("connected to: " + ser.portstr)
-count=1
-
-while True:
-    line = ser.readline()
-    if line:
-        text = line.decode()
-        print(text)
-        
-
-
-
-ser.close()
+def readSerial():
+    while True:
+        line = ser.readline()
+        if line:
+            text = line.decode()
+            return text

@@ -9,7 +9,7 @@ I'm doing the entire project with Python and the ArduinoIDE to load the program 
 
 ## 5/20/26
 
-I've eddited the connection.py file 
+I've edited the connection.py file to be more modular. Now I have all methods in functions and now I can call them from the main file. Also I've added a new function called readSerial, that as it name tells, can read the serial port of the arduino with Python. 
 
 ## 5/19/26
 

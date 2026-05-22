@@ -9,7 +9,11 @@ I’m building the entire project with Python and the Arduino IDE to load the pr
 
 ## 5/22/26
 
-Today I've started to think a way to 
+Today I was reviewing how certain parts of the code worked and correcting them to make the project easier to read and more modular.
+
+Aside from that, I made a small program capable of iterating through a list of elements from beginning to end and returning to the first element after reaching the last one. The program switches between elements whenever the select button is pressed.
+
+On the other hand, I added three buttons to the breadboard and configured each one to send a different message through the serial port.
 
 ## 5/21/26
 

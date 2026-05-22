@@ -1,23 +1,15 @@
-from pycaw.pycaw import AudioUtilities
-import connection
-sessions = AudioUtilities.GetAllSessions()
+from audio import getSessions
+from connection import readSerial
 
-unique_sessions = {}
+apps = getSessions()
 
-port = connection.find_arduino_port()
+selected_index = 0
 
-for session in sessions:
-    if not session.Process:
-        continue
-
-    name = session.Process.name()
-
-    if name not in unique_sessions:
-        unique_sessions[name] = session
-
-
-for name in unique_sessions:
-    print(name)
+print(apps[selected_index])
 
 while True:
-    print(connection.readSerial())
+    msg = readSerial()
+
+    if msg and msg == "select":
+        selected_index = (selected_index + 1) % len(apps)
+        print(apps[selected_index])

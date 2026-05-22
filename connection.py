@@ -1,14 +1,14 @@
 import serial.tools.list_ports
 import serial
 
-def find_arduino_port():
+def findArduinoPort():
     for port in serial.tools.list_ports.comports():
         if 'Arduino' in port.description or 'CH340' in port.description:
             return port.device
     return None
 
 ser = serial.Serial(
-    port= find_arduino_port(),
+    port= findArduinoPort(),
     baudrate=9600,
     parity=serial.PARITY_NONE,
     stopbits=serial.STOPBITS_ONE,
@@ -17,8 +17,10 @@ ser = serial.Serial(
     )
 
 def readSerial():
-    while True:
-        line = ser.readline()
-        if line:
-            text = line.decode()
-            return text
+
+    line = ser.readline()
+    
+    if line:
+        return line.decode().strip()
+    
+    return None

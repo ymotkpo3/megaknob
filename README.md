@@ -9,7 +9,7 @@ I'm doing the entire project with Python and the ArduinoIDE to load the program 
 
 ## 5/21/26
 
-I've edited the Arduino firmware to make it detect only when you press and then release the button. This prevents the serial port from spamming the message "select". Now, the message is transmited one time each time I press the button. 
+Today I was trying to think how to solve the problem of the serial port sending the text "select" multiple times per second. I've concluded that waiting to the release of the button is very important to detect a single click, so I've edited the Arduino firmware to make it detect only when you press and then release the button adding a 500 miliseconds delay. This prevents the serial port from spamming the message "select". Now, the message is transmited only one time each time the button is pressed.
 
 ## 5/20/26
 

@@ -1,3 +1,5 @@
+bool pressed = false;
+
 void setup() {
   Serial.begin(9600);
 
@@ -5,7 +7,15 @@ void setup() {
 }
 
 void loop() {
+
   if (digitalRead(4) == HIGH) {
-    Serial.println("select");
+    pressed = true;
   }
+
+  if (digitalRead(4) == LOW && pressed == true) {
+    Serial.println("select");
+    pressed = false;
+    delay(500);
+  }
+
 }

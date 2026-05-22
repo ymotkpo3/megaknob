@@ -7,6 +7,10 @@ I'm doing the entire project with Python and the ArduinoIDE to load the program 
 
 # Changelog
 
+## 5/21/26
+
+I've edited the Arduino firmware to make it detect only when you press and then release the button. This prevents the serial port from spamming the message "select". Now, the message is transmited one time each time I press the button. 
+
 ## 5/20/26
 
 I've edited the connection.py file to be more modular. Now I have all methods in functions and now I can call them from the main file. Also I've added a new function called readSerial, that as it name tells, can read the serial port of the arduino with Python. 

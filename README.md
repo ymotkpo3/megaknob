@@ -17,7 +17,8 @@ For these reasons, I need to think of a way to find a process higher up in the s
 
 I made a small program to extract parent processes and inspect the names of the most common system processes that appear above application executables, and I found what can be seen in the image below.
 
-<img width="225" height="597" alt="image" src="https://github.com/user-attachments/assets/6e88d025-a8b6-432a-8c2b-475d773d04e3" />
+<img width="220" height="321" alt="image" src="https://github.com/user-attachments/assets/e23e0071-1722-4d61-b21e-8203ebade37a" />
+
 
 
 ## 5/22/26

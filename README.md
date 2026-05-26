@@ -7,6 +7,19 @@ I’m building the entire project with Python and the Arduino IDE to load the pr
 
 # Changelog
 
+## 5/26/26
+
+Today I decided to focus on process analysis on the computer. Although I can easily obtain the audio session of each program running on my computer, I cannot easily obtain a friendly name or identify the main process to which a subprocess belongs. This happens because many programs nest processes inside other processes. Because of this, I decided to integrate the Psutil library into my project. It is fully compatible with Pycaw and can help me find what I am looking for.
+
+One example of this is WhatsApp Web. I do not fully understand how the audio management of that program works internally, but from what I can observe, the audio session is called msedgewebview2.exe. When I try to search for the parent processes of that process, Psutil only finds msedgewebview2.exe as the highest-level process.
+
+For these reasons, I need to think of a way to find a process higher up in the subprocess tree that is actually related to the main application, which in this case would be WhatsApp. The problem is that if you keep analyzing parent processes all the way to the top, you may eventually encounter system processes. Because of this, I need to define a limit where system processes begin and stop searching before reaching that point.
+
+I made a small program to extract parent processes and inspect the names of the most common system processes that appear above application executables, and I found what can be seen in the image below.
+
+<img width="225" height="597" alt="image" src="https://github.com/user-attachments/assets/6e88d025-a8b6-432a-8c2b-475d773d04e3" />
+
+
 ## 5/22/26
 
 Today I was reviewing how certain parts of the code worked and correcting them to make the project easier to read and more modular.

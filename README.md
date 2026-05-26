@@ -15,6 +15,9 @@ Aside from that, I made a small program capable of iterating through a list of e
 
 On the other hand, I added three buttons to the breadboard and configured each one to send a different message through the serial port.
 
+<img width="1121" height="533" alt="image" src="https://github.com/user-attachments/assets/a13f6e77-3fd4-4091-8bcf-6b4e8adcfc3c" />
+
+
 ## 5/21/26
 
 Today I was trying to think how to solve the problem of the serial port sending the text “select” multiple times per second. I’ve concluded that waiting to the release of the button is very important to detect a single click, so I’ve edited the Arduino firmware to make it detect only when you press and then release the button, adding a 500 millisecond delay. This prevents the serial port from spamming the message “select”. Now, the message is transmitted only one time each time the button is pressed.

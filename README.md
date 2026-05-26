@@ -25,6 +25,8 @@ The only issue with this approach is that it relies on a set of conditions I def
 
 On the other hand, after spending a considerable amount of time researching the best way to structure the project, I concluded that the best approach is to create an “app” object for each application that produces audio on the computer. In this way, each “app” will contain the audio session process ID, the top process ID, and the friendly name of the application.
 
+The main.py file isn't working because of all these changes. 
+
 ## 5/22/26
 
 Today I was reviewing how certain parts of the code worked and correcting them to make the project easier to read and more modular.

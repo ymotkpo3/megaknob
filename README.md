@@ -19,7 +19,11 @@ I made a small program to extract parent processes and inspect the names of the 
 
 <img width="220" height="321" alt="image" src="https://github.com/user-attachments/assets/e23e0071-1722-4d61-b21e-8203ebade37a" />
 
+To address this, I created a function that applies a heuristic capable of detecting when a process belongs to the system or to the actual program, and when it is not the original application name. What it does is traverse the process tree starting from the process that contains the audio session. It searches for the parent process of each process until it reaches a process that no longer belongs to a specific application, but instead belongs to the system. At this point, I determine that the last non-system process encountered is the parent process of all the remaining subprocesses, including the audio session, thereby identifying the real program name and its executable.
 
+The only issue with this approach is that it relies on a set of conditions I defined manually, which act as exceptions. This is not practical or stable at all, but it is the only way I have found to solve this problem without developing a custom task manager. Eventually, I will keep refining these process name exceptions to make the system more robust.
+
+On the other hand, after spending a considerable amount of time researching the best way to structure the project, I concluded that the best approach is to create an “app” object for each application that produces audio on the computer. In this way, each “app” will contain the audio session process ID, the top process ID, and the friendly name of the application.
 
 ## 5/22/26
 

@@ -1,8 +1,8 @@
 from pycaw.pycaw import AudioUtilities
 
-def getSessions():
+def getAudioSessions():
 
-    unique_sessions = {}
+    result = {}
 
     sessions = AudioUtilities.GetAllSessions()
 
@@ -11,14 +11,12 @@ def getSessions():
         if not session.Process:
             continue
 
-        name = session.Process.name()
+        pid = session.Process.pid
 
-        if name not in unique_sessions:
-            unique_sessions[name] = session
+        if pid not in result:
+            result[pid] = []
 
-    result = ["MASTER"]
-
-    result.extend(unique_sessions.keys())
+        result[pid].append(session)
 
     return result
 

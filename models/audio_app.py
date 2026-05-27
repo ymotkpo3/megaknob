@@ -3,14 +3,14 @@ class AudioApp:
     def __init__(
         self,
         friendlyName,
-        audioSessionPIDs,
+        audioSessionPID,
         topProcessPID,
         sessions
     ):
 
         self.friendlyName = friendlyName
 
-        self.audioSessionPIDs = audioSessionPIDs
+        self.audioSessionPID = audioSessionPID
 
         self.topProcessPID = topProcessPID
 

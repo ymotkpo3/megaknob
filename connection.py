@@ -15,11 +15,11 @@ def createSerialConnection(puerto):
         stopbits=serial.STOPBITS_ONE,
         bytesize=serial.EIGHTBITS,
         timeout=2
-        )
+    )
 
-def readSerial():
+def readSerial(ser):
 
-    line = createSerialConnection(findArduinoPort()).readline()
+    line = ser.readline()
     
     if line:
         return line.decode().strip()

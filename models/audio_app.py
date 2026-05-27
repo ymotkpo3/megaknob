@@ -15,3 +15,6 @@ class AudioApp:
         self.topProcessPID = topProcessPID
 
         self.sessions = sessions
+
+    def __repr__(self):
+        return self.friendlyName

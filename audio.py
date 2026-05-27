@@ -1,6 +1,6 @@
 from pycaw.pycaw import AudioUtilities
 
-def getAudioSessions():
+def getGroupedAudioSessions():
 
     result = {}
 

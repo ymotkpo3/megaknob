@@ -1,7 +1,7 @@
 import psutil
 from config import SYSTEM, IGNORED
 
-def resolveParentProcessPid(PID):
+def resolveFriendlyProcessPID(PID):
 
     current = psutil.Process(PID)
 
@@ -22,6 +22,6 @@ def resolveParentProcessPid(PID):
 
     return best_match.pid
 
-def resolveParentFriendlyName(PID):
+def getProcessName(PID):
     session = psutil.Process(PID)
     return session.name()

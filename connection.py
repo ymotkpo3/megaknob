@@ -7,18 +7,21 @@ def findArduinoPort():
             return port.device
     return None
 
-ser = serial.Serial(
-    port= findArduinoPort(),
-    baudrate=9600,
-    parity=serial.PARITY_NONE,
-    stopbits=serial.STOPBITS_ONE,
-    bytesize=serial.EIGHTBITS,
-    timeout=2
-    )
+def createSerialConnection(puerto):
+    ser = serial.Serial(
+        port= puerto,
+        baudrate=9600,
+        parity=serial.PARITY_NONE,
+        stopbits=serial.STOPBITS_ONE,
+        bytesize=serial.EIGHTBITS,
+        timeout=2
+        )
+    
+    return ser
 
 def readSerial():
 
-    line = ser.readline()
+    line = createSerialConnection(findArduinoPort()).readline()
     
     if line:
         return line.decode().strip()

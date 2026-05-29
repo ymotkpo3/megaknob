@@ -1,45 +1,28 @@
-bool selpressed = false;
-bool dwnpressed = false;
-bool uppressed = false;
+#include <Adafruit_NeoPixel.h>
+
+int Power = 11;
+int PIN  = 12;
+#define NUMPIXELS 1
+
+Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
 
-  pinMode(2, INPUT_PULLUP);
-  pinMode(4, INPUT_PULLUP);
-  pinMode(7, INPUT_PULLUP);
+  pixels.begin();
+  pinMode(Power,OUTPUT);
+  digitalWrite(Power, HIGH);
+  pinMode(6, INPUT);
+
 }
 
 void loop() {
-
-    if (digitalRead(2) == HIGH) {
-    dwnpressed = true;
+    pixels.clear();
+    
+  if (digitalRead(6) == HIGH) {
+    pixels.setPixelColor(0, pixels.Color(15, 25, 205));
+    pixels.show();
   }
-
-  if (digitalRead(2) == LOW && dwnpressed == true) {
-    Serial.println("voldwn");
-    dwnpressed = false;
-    delay(500);
-  }
-
-  if (digitalRead(4) == HIGH) {
-    selpressed = true;
-  }
-
-  if (digitalRead(4) == LOW && selpressed == true) {
-    Serial.println("select");
-    selpressed = false;
-    delay(500);
-  }
-
-  if (digitalRead(7) == HIGH) {
-    uppressed = true;
-  }
-
-  if (digitalRead(7) == LOW && uppressed == true) {
-    Serial.println("volup");
-    uppressed = false;
-    delay(500);
-  }
-
+  pixels.setPixelColor(0, pixels.Color(0, 0, 0));
+  pixels.show();
 }

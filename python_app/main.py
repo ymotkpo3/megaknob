@@ -1,5 +1,5 @@
 import connection as con
-import app_builder
+import app_builder as app_builder
 
 
 apps = app_builder.createAllAppsObjectsList()

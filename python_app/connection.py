@@ -3,8 +3,15 @@ import serial
 
 def findArduinoPort():
     for port in serial.tools.list_ports.comports():
-        if 'Arduino' in port.description or 'CH340' in port.description:
+
+        if (
+            port.vid == 0x2E8A
+            and
+            port.pid == 0x000A
+        ):
+
             return port.device
+
     return None
 
 def createSerialConnection(puerto):

@@ -1,4 +1,6 @@
 # Megaknob
+
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/ymotkpo3/megaknob)
 I’m not taking classes because my university is on strike, so I’m working and making my own projects.
 
 This is an attempt to learn about connectivity between Windows and the serial port of my Arduino UNO, and a bit of the Windows audio stack. My objective is to document and demonstrate the results of this project.

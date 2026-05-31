@@ -7,6 +7,20 @@ I’m building the entire project with Python and the Arduino IDE to load the pr
 
 # Changelog
 
+## 5/31/26
+
+Today I implemented one of the most important updates to the project.
+
+Internally, the program created one app object for each active audio session at the moment the list of objects was generated. After using the program in different scenarios, I noticed that multiple instances of the app class often appeared with the same name but different process IDs. For this reason, instead of grouping applications by the audio session PID, I decided to group them by the friendly PID.
+
+Now, in the program's internal logic, a single app can contain multiple audio session PIDs belonging to the same application. In addition, I added the ability to increase and decrease the volume of the currently selected app, all controlled through the rotary encoder connected to the computer.
+
+This update is so significant that I could already consider the project complete, since I have achieved what I originally set out to build: a piece of hardware that can be connected to a computer to control the volume of each application independently.
+
+The reality is that I find this project extremely enjoyable to work on, and it has been a long time since I have been this focused on something like this. Because of that, I want to continue developing it and make it feel more like a finished product than a prototype.
+
+I will keep working on it. Over the next few days, I plan to improve the user experience, add new features, and implement many other enhancements.
+
 ## 5/26/26
 
 Today I decided to focus on process analysis on the computer. Although I can easily obtain the audio session of each program running on my computer, I cannot easily obtain a friendly name or identify the main process to which a subprocess belongs. This happens because many programs nest processes inside other processes. Because of this, I decided to integrate the Psutil library into my project. It is fully compatible with Pycaw and can help me find what I am looking for.

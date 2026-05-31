@@ -22,8 +22,15 @@ ser = con.createSerialConnection(con.findArduinoPort())
 while True:
     msg = con.readSerial(ser)
 
-    if msg and msg == "select":
+    if msg and msg == "click":
+        print("select")
+
+    if msg == "appUP":
         selected_index = (selected_index + 1) % len(apps)
+        print(apps[selected_index])
+
+    if msg == "appDWN":
+        selected_index = (selected_index - 1) % len(apps)
         print(apps[selected_index])
 
     if msg == "volUP":

@@ -1,13 +1,13 @@
 from models import audio_app as app
 from audio import getGroupedAudioSessions
-from processes import resolveFriendlyProcessPID, getProcessName
+from processes import getProcessName
 
 def createAppObject(NAME, APID, FPID, ASESS):
     return app.AudioApp(
 
         friendlyName = NAME,
 
-        audioSessionPID = APID,
+        audioSessionPIDs = APID,
 
         topProcessPID = FPID,
 
@@ -16,17 +16,20 @@ def createAppObject(NAME, APID, FPID, ASESS):
     )
 
 def createAllAppsObjectsList():
+
     audioSessions = getGroupedAudioSessions()
 
     output = []
 
+    for friendlyPID in audioSessions:
 
+        fname = getProcessName(friendlyPID)
 
-    for audioPID in audioSessions:
-        toprocPID = resolveFriendlyProcessPID(audioPID)
-        fname = getProcessName(toprocPID)
-        sec = audioSessions[audioPID]
-        output.append(createAppObject(fname, audioPID, toprocPID, sec))
+        audioPIDs = audioSessions[friendlyPID]["audioPIDs"]
+
+        sessions = audioSessions[friendlyPID]["sessions"]
+
+        output.append(createAppObject(fname, audioPIDs, friendlyPID, sessions))
 
     return output
         

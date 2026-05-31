@@ -32,11 +32,11 @@ void loop() {
     int newPos = encoder.getPosition();
 
     if (pos < newPos) {
-        Serial.println("izquierda");
+        Serial.println("volDWN");
         pos = newPos;
         
     } else if (pos > newPos){
-      Serial.println("derecha");
+      Serial.println("volUP");
       pos = newPos;
     }
 }

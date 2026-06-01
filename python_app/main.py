@@ -1,10 +1,10 @@
 import connection as con
-import app_builder
+import app_builder as ab
 import audio as au
 import extra_logic as log
 import serial
 
-apps = app_builder.createAllAppsObjectsList()
+apps = ab.createAllAppsObjectsList()
 
 for app in apps:
     print(
@@ -39,7 +39,7 @@ while True:
         if connected == True:
             msg = con.readSerial(ser)
             if msg == "update":
-                newApps = app_builder.createAllAppsObjectsList()
+                newApps = ab.createAllAppsObjectsList()
                 apps = log.mergeApps(apps, newApps)
                 for app in apps:
                     print(

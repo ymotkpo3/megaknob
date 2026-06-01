@@ -4,7 +4,10 @@ import audio as au
 import extra_logic as log
 import serial
 
-apps = ab.createAllAppsObjectsList()
+appsNoMaster = ab.createAllAppsObjectsList()
+
+apps = [ab.createAppObject("master", None, None, [None])]
+apps += appsNoMaster
 
 for app in apps:
     print(
@@ -27,6 +30,9 @@ else:
     ser = None
     connected = False
 
+# device = AudioUtilities.GetSpeakers()
+# print("Device found: %s" % device.FriendlyName)
+
 while True:
     try:
         if connected == False:
@@ -34,12 +40,14 @@ while True:
             if ser.port != None:
                 connected = True
                 print("RECONNECTED")
+                selected_index = 0
                 print(apps[selected_index])
+
 
         if connected == True:
             msg = con.readSerial(ser)
             if msg == "update":
-                newApps = ab.createAllAppsObjectsList()
+                newApps = [ab.createAppObject("master", None, None, [None])] + ab.createAllAppsObjectsList()
                 apps = log.mergeApps(apps, newApps)
                 for app in apps:
                     print(
@@ -64,6 +72,16 @@ while True:
                 selected_index = (selected_index - 1) % len(apps)
 
                 print(apps[selected_index])
+
+            if msg == "volUP" and apps[selected_index].friendlyName == "master":
+
+                au.masterVolUp()
+                continue
+
+            if msg == "volDWN" and apps[selected_index].friendlyName == "master":
+                
+                au.masterVolDown()
+                continue
 
             if msg == "volUP":
 

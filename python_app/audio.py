@@ -1,6 +1,8 @@
 from pycaw.pycaw import AudioUtilities
 import processes as proc
 
+device = AudioUtilities.GetSpeakers()
+
 def getGroupedAudioSessions():
 
     result = {}
@@ -56,3 +58,32 @@ def volumeDown(app):
         new_volume = max(0.0, current - 0.02)
 
         volume.SetMasterVolume(new_volume, None)
+
+# def masterVolUp():
+
+#     current = device.EndpointVolume.GetMasterVolumeLevelScalar()
+
+#     new_volume = min(1.0, current + 0.02)
+
+#     device.EndpointVolume.SetMasterVolumeLevelScalar(new_volume, None)
+
+def masterVolUp():
+
+    current = device.EndpointVolume.GetMasterVolumeLevelScalar()
+
+    new_volume = min(1.0, current + 0.02)
+
+    device.EndpointVolume.SetMasterVolumeLevelScalar(new_volume, None)
+
+
+
+def masterVolDown():
+
+    current = device.EndpointVolume.GetMasterVolumeLevelScalar()
+
+    if current <= 0.02:
+        new_volume = 0
+    elif current > 0:
+        new_volume = current - 0.02
+
+    device.EndpointVolume.SetMasterVolumeLevelScalar(new_volume, None)

@@ -1,7 +1,7 @@
 import serial.tools.list_ports
 import serial
 
-def findArduinoPort():
+def findDevicePort():
     for port in serial.tools.list_ports.comports():
 
         if (

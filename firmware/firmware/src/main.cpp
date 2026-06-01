@@ -3,7 +3,7 @@
 
 int MODE_SELECT = 0;
 int MODE_VOLUME = 1;
-int mode = 0;
+static int mode = 0;
 
 #define SW 6
 

@@ -1,3 +1,5 @@
+import app_builder
+
 
 def mergeApps(oldApps, newApps):
 
@@ -23,3 +25,4 @@ def mergeApps(oldApps, newApps):
             result.append(app)
 
     return result
+

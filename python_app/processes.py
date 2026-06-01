@@ -2,26 +2,33 @@ import psutil
 from config import SYSTEM, IGNORED
 
 def resolveFriendlyProcessPID(PID):
+    try:
+        current = psutil.Process(PID)
+        
+        best_match = None
 
-    current = psutil.Process(PID)
+        while current:
 
-    best_match = None
+            if current.name() in SYSTEM:
 
-    while current:
+                if best_match:
+                    break
 
-        if current.name() in SYSTEM:
+            elif current.name() not in IGNORED:
 
-            if best_match:
-                break
+                best_match = current
 
-        elif current.name() not in IGNORED:
+            current = current.parent()
 
-            best_match = current
-
-        current = current.parent()
-
-    return best_match.pid
+        return best_match.pid
+    except(
+        psutil.NoSuchProcess,
+        psutil.AccessDenied,
+        psutil.ZombieProcess):
+        return None
 
 def getProcessName(PID):
+
     session = psutil.Process(PID)
+    
     return session.name()

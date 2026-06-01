@@ -27,6 +27,7 @@ void loop() {
       
       Serial.println("click");
       if(mode == MODE_VOLUME){
+        Serial.println("update");
         mode = MODE_SELECT;
       } else if (mode == MODE_SELECT){
         mode = MODE_VOLUME;

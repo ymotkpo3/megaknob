@@ -5,9 +5,9 @@ This is an attempt to learn about connectivity between Windows and the serial po
 
 I’m building the entire project with Python and the Arduino IDE to load the program in C++.
 
-# Changelog
+## Changelog
 
-## 5/31/26
+### 5/31/26
 
 Today I implemented one of the most important updates to the project.
 
@@ -21,7 +21,7 @@ The reality is that I find this project extremely enjoyable to work on, and it h
 
 I will keep working on it. Over the next few days, I plan to improve the user experience, add new features, and implement many other enhancements.
 
-## 5/26/26
+### 5/26/26
 
 Today I decided to focus on process analysis on the computer. Although I can easily obtain the audio session of each program running on my computer, I cannot easily obtain a friendly name or identify the main process to which a subprocess belongs. This happens because many programs nest processes inside other processes. Because of this, I decided to integrate the Psutil library into my project. It is fully compatible with Pycaw and can help me find what I am looking for.
 
@@ -41,7 +41,7 @@ On the other hand, after spending a considerable amount of time researching the 
 
 The main.py file isn't working because of all these changes. 
 
-## 5/22/26
+### 5/22/26
 
 Today I was reviewing how certain parts of the code worked and correcting them to make the project easier to read and more modular.
 
@@ -52,27 +52,27 @@ On the other hand, I added three buttons to the breadboard and configured each o
 <img width="1121" height="533" alt="image" src="https://github.com/user-attachments/assets/a13f6e77-3fd4-4091-8bcf-6b4e8adcfc3c" />
 
 
-## 5/21/26
+### 5/21/26
 
 Today I was trying to think how to solve the problem of the serial port sending the text “select” multiple times per second. I’ve concluded that waiting to the release of the button is very important to detect a single click, so I’ve edited the Arduino firmware to make it detect only when you press and then release the button, adding a 500 millisecond delay. This prevents the serial port from spamming the message “select”. Now, the message is transmitted only one time each time the button is pressed.
 
-## 5/20/26
+### 5/20/26
 
 I’ve edited the connection.py file to be more modular. Now I have all methods in functions, and I can call them from the main file. Also, I’ve added a new function called readSerial, which, as its name suggests, can read the serial port of the Arduino with Python.
 
-## 5/19/26
+### 5/19/26
 
 To begin, I have been playing with the Python packages pyserial and pycaw.
 
-### Pyserial:
+#### Pyserial:
 
 This is the package used to communicate with the Arduino Board using the serial communication method. All the things I did can be seen in the [connection.py](connection.py) file. It is a short program that detects the port where the Arduino is connected.
 
-### Pycaw:
+#### Pycaw:
 
 This package is very useful to control the audio of different Windows processes. This part can be found inside the [main.py](main.py) file. When I started trying to detect all the sound processes running in my computer, I had some problems because there were duplicated processes or processes with names that weren’t the program's real name. For example, the WhatsApp Web process is called msedgewebview2.exe. For now, this is not a problem because I’m learning how it works.
 
-### Arduino connection:
+#### Arduino connection:
 
 The objective is to use a rotary encoder, but to test the programs and the general method of working, I will use a button with the following connection scheme:
 
@@ -82,6 +82,6 @@ The objective is to use a rotary encoder, but to test the programs and the gener
 
 This is called a pull-up resistance connection. Surprisingly, you can't connect the Arduino pin directly to the button and then to the ground or the 5V port because it can’t read any information if the button isn’t pressed. Also, if you connect the button between the 5V port and the ground port and the digital pin in parallel in the middle of that circuit, you are making a short-circuit.
 
-#### Program:
+##### Program:
 
 The program can be found on the [ArduinoUNO.ino](https://github.com/ymotkpo3/proyecto-controlador-de-volumen/blob/main/Arduino%20Code/ArduinoUNO.ino) . There is not too much to see. It initialises the serial monitor and writes the word “select” when I press the button.

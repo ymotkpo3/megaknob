@@ -59,14 +59,6 @@ def volumeDown(app):
 
         volume.SetMasterVolume(new_volume, None)
 
-# def masterVolUp():
-
-#     current = device.EndpointVolume.GetMasterVolumeLevelScalar()
-
-#     new_volume = min(1.0, current + 0.02)
-
-#     device.EndpointVolume.SetMasterVolumeLevelScalar(new_volume, None)
-
 def masterVolUp():
 
     current = device.EndpointVolume.GetMasterVolumeLevelScalar()

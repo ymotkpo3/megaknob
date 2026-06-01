@@ -1,6 +1,3 @@
-import app_builder
-
-
 def mergeApps(oldApps, newApps):
 
     old_ids = []

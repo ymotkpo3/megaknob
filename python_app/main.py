@@ -30,9 +30,6 @@ else:
     ser = None
     connected = False
 
-# device = AudioUtilities.GetSpeakers()
-# print("Device found: %s" % device.FriendlyName)
-
 while True:
     try:
         if connected == False:
@@ -57,9 +54,22 @@ while True:
                         len(app.sessions)
                     )
                 print(apps[selected_index])
+
             if msg == "click":
-                
                 print("select")
+            
+            if msg == "master":
+                newApps = [ab.createAppObject("master", None, None, [None])] + ab.createAllAppsObjectsList()
+                apps = log.mergeApps(apps, newApps)
+                for app in apps:
+                    print(
+                        app.friendlyName,
+                        app.audioSessionPIDs,
+                        app.topProcessPID,
+                        len(app.sessions)
+                    )
+                selected_index = 0
+                print(apps[selected_index])
 
             if msg == "appUP":
 
@@ -90,10 +100,10 @@ while True:
             if msg == "volDWN":
 
                 au.volumeDown(apps[selected_index])
-    except(
-        serial.SerialException
-    ):
+    except(serial.SerialException):
         if connected == True:
             connected = False
             print("DISCONNECTED")
         continue
+    except(IndexError):
+        selected_index = len(apps)

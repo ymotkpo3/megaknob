@@ -2,7 +2,8 @@ SYSTEM = [
     "svchost.exe",
     "services.exe",
     "wininit.exe",
-    "explorer.exe"
+    "explorer.exe",
+    "taskhostw.exe"
 ]
 
 IGNORED = [

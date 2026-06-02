@@ -22,6 +22,7 @@ def resolveFriendlyProcessPID(PID):
 
         return best_match.pid
     except(
+        AttributeError,
         psutil.NoSuchProcess,
         psutil.AccessDenied,
         psutil.ZombieProcess):

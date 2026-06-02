@@ -5,6 +5,7 @@ int MODE_SELECT = 0;
 int MODE_VOLUME = 1;
 static int mode = 0;
 
+
 #define SW 6
 
 RotaryEncoder encoder(
@@ -18,13 +19,51 @@ void setup() {
   pinMode(SW, INPUT_PULLUP);
 }
 
+bool buttonPressed = false;
+bool longPressSent = false;
+unsigned long pressStart = 0;
+
 void loop() {
 
+  encoder.tick();
 
-    encoder.tick();
+  bool currentState = digitalRead(SW) == LOW;
 
-    if(digitalRead(SW) == LOW){
-      
+  if (currentState && !buttonPressed) {
+    
+    delay(30);
+
+    if (digitalRead(SW) != LOW)
+        return;
+
+     Serial.println("PRESS");
+
+    buttonPressed = true;
+    longPressSent = false;
+    pressStart = millis();
+  }
+
+  if (currentState && !longPressSent && millis() - pressStart >= 700) {
+
+    Serial.println("master");
+    mode = MODE_VOLUME;
+
+    longPressSent = true;
+  }
+
+  if (!currentState && buttonPressed) {
+
+    delay(30);
+
+    if (digitalRead(SW) == LOW)
+        return;
+    
+    Serial.println("RELEASE");
+
+
+    buttonPressed = false;
+
+    if (!longPressSent) {
       Serial.println("click");
       if(mode == MODE_VOLUME){
         Serial.println("update");
@@ -34,23 +73,23 @@ void loop() {
       }
       delay(400);
     }
+  }
 
-    static int pos = 0;
+  static int pos = 0;
 
-    int newPos = encoder.getPosition();
+  int newPos = encoder.getPosition();
 
-    if (pos < newPos && mode == MODE_VOLUME) {
-        Serial.println("volDWN");
-        pos = newPos;
-        
-    } else if (pos > newPos && mode == MODE_VOLUME){
-      Serial.println("volUP");
-      pos = newPos;
-    } else if (pos < newPos && mode == MODE_SELECT){
-      Serial.println("appDWN");
-      pos = newPos;
-    } else if (pos > newPos && mode == MODE_SELECT){
-      Serial.println("appUP");
-      pos = newPos;
-    }
+  if (pos < newPos && mode == MODE_VOLUME) {
+    Serial.println("volDWN");
+    pos = newPos;
+  } else if (pos > newPos && mode == MODE_VOLUME){
+    Serial.println("volUP");
+    pos = newPos;
+  } else if (pos < newPos && mode == MODE_SELECT){
+    Serial.println("appDWN");
+    pos = newPos;
+  } else if (pos > newPos && mode == MODE_SELECT){
+    Serial.println("appUP");
+    pos = newPos;
+  }
 }

@@ -47,4 +47,4 @@ while True:
         if connected == True:
             connected = False
             print("DISCONNECTED")
-        continues
+        continue

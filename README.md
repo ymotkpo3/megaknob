@@ -18,6 +18,14 @@ Megaknob uses a single encoder and dynamic application selection, resulting in a
 - Built with RP2040
 - Open source
 
+## Usage
+
+1. Press the knob to enter application selection mode.
+2. Rotate to choose an application.
+3. Press again to enter volume control mode.
+4. Rotate to adjust volume.
+5. Hold the knob to instantly return to Master Volume.
+
 ## Roadmap
 
 ### Completed

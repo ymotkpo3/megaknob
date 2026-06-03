@@ -44,3 +44,4 @@ Megaknob uses a single encoder and dynamic application selection, resulting in a
 - [ ] Better process identification
 - [ ] Multi-platform support
 - [ ] Overlay notifications
+- [ ] Detailed project wiki

@@ -12,6 +12,12 @@ Megaknob allows you to control the volume of individual applications and the sys
 - Built with RP2040
 - Open source
 
+## Why Megaknob?
+
+Most volume controllers assign a dedicated slider to each application.
+
+Megaknob uses a single encoder and dynamic application selection, resulting in a smaller, simpler and more adaptable device.
+
 ## Roadmap
 
 ### Completed

@@ -1,5 +1,5 @@
 # Megaknob
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/enthought/comtypes)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/ymotkpo3/megaknob)
 
 
 A minimalist USB volume controller for Windows.

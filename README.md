@@ -1,7 +1,6 @@
 # Megaknob
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/ymotkpo3/megaknob)
 
-
 A minimalist USB volume controller for Windows.
 
 Megaknob allows you to control the volume of individual applications and the system master volume using a single rotary encoder.

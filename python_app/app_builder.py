@@ -1,8 +1,8 @@
 from models import audio_app as app
 from audio import getGroupedAudioSessions
-from processes import getProcessName
+from processes import getProcessName, getProcessPath
 
-def createAppObject(NAME, APID, FPID, ASESS):
+def createAppObject(NAME, APID, FPID, ASESS, EXEC):
     return app.AudioApp(
 
         friendlyName = NAME,
@@ -11,7 +11,9 @@ def createAppObject(NAME, APID, FPID, ASESS):
 
         topProcessPID = FPID,
 
-        sessions = ASESS
+        sessions = ASESS,
+
+        execPath = EXEC
 
     )
 
@@ -29,7 +31,9 @@ def createAllAppsObjectsList():
 
         sessions = audioSessions[friendlyPID]["sessions"]
 
-        output.append(createAppObject(fname, audioPIDs, friendlyPID, sessions))
+        exec = getProcessPath(friendlyPID)
+
+        output.append(createAppObject(fname, audioPIDs, friendlyPID, sessions, exec))
 
     return output
 

@@ -7,7 +7,8 @@ def appDebug(apps):
             app.friendlyName,
             app.audioSessionPIDs,
             app.topProcessPID,
-            len(app.sessions)
+            len(app.sessions),
+            app.execPath
         )
 
 def debMsgRead(apps, index, msg):

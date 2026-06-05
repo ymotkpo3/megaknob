@@ -1,5 +1,6 @@
 import psutil
 from config import SYSTEM, IGNORED
+from win32.win32gui import *
 
 def resolveFriendlyProcessPID(PID):
     try:
@@ -33,3 +34,25 @@ def getProcessName(PID):
     session = psutil.Process(PID)
     
     return session.name()
+
+def getProcessPath(pid):
+
+    try:
+        process = psutil.Process(pid)
+
+        return process.exe()
+
+    except (
+        psutil.NoSuchProcess,
+        psutil.AccessDenied
+    ):
+        return None
+    
+def getProcessIcon(path):
+
+    large, small = ExtractIconEx(path, 0)
+
+    if large:
+        return large[0]
+
+    return None

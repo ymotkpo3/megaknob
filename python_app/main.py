@@ -6,7 +6,7 @@ import communication as com
 
 appsNoMaster = ab.createAllAppsObjectsList()
 
-apps = [ab.createAppObject("master", None, None, [None])]
+apps = [ab.createAppObject("master", None, None, [None], None)]
 apps += appsNoMaster
 
 deb.appDebug(apps)

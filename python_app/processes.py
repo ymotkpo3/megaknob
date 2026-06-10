@@ -1,6 +1,8 @@
 import psutil
 from config import SYSTEM, IGNORED
 from win32.win32gui import *
+import win32com.shell.shell as shell
+import win32com.shell.shellcon as shellcon
 
 def resolveFriendlyProcessPID(PID):
     try:
@@ -50,9 +52,14 @@ def getProcessPath(pid):
     
 def getProcessIcon(path):
 
-    large, small = ExtractIconEx(path, 0)
+    success, info = shell.SHGetFileInfo(
+        path,
+        0,
+        shellcon.SHGFI_ICON |
+        shellcon.SHGFI_LARGEICON
+    )
 
-    if large:
-        return large[0]
+    if not success:
+        return None
 
-    return None
+    return info[0]

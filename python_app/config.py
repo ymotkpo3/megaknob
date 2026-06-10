@@ -3,7 +3,8 @@ SYSTEM = [
     "services.exe",
     "wininit.exe",
     "explorer.exe",
-    "taskhostw.exe"
+    "taskhostw.exe",
+    "wallpaperservice32.exe"
 ]
 
 IGNORED = [

@@ -79,3 +79,13 @@ def masterVolDown():
         new_volume = current - 0.02
 
     device.EndpointVolume.SetMasterVolumeLevelScalar(new_volume, None)
+
+def getVolume(app):
+
+    if app.friendlyName == "master":
+        return device.EndpointVolume.GetMasterVolumeLevelScalar()
+
+    if not app.sessions:
+        return 0
+
+    return app.sessions[0].SimpleAudioVolume.GetMasterVolume()

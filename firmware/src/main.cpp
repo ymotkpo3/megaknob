@@ -6,11 +6,11 @@ int MODE_VOLUME = 1;
 static int mode = 0;
 
 
-#define SW 6
+#define SW 0
 
 RotaryEncoder encoder(
-    28,
-    29,
+    7,
+    6,
     RotaryEncoder::LatchMode::TWO03
 );
 

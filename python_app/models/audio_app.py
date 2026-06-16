@@ -1,26 +1,37 @@
+from dataclasses import dataclass
+
+
+@dataclass
 class AudioApp:
+    """
+    Represents an audio-producing application or the master volume control.
 
-    def __init__(
-        self,
-        friendlyName,
-        topProcessPID,
-        audioSessionPIDs,
-        sessions,
-        execPath,
-        isMaster
-    ):
+    Attributes:
+        friendlyName:
+            Display name of the application.
 
-        self.friendlyName = friendlyName
+        topProcessPID:
+            Top-level process PID associated with the application.
 
-        self.topProcessPID = topProcessPID
+        audioSessionPIDs:
+            Audio session process IDs grouped under this application.
 
-        self.audioSessionPIDs = audioSessionPIDs
+        sessions:
+            Audio sessions associated with the application.
 
-        self.sessions = sessions
+        execPath:
+            Path to the application's executable.
 
-        self.execPath = execPath
+        isMaster:
+            True if this object represents the master volume control.
+    """
 
-        self.isMaster = isMaster
+    friendlyName: str
+    topProcessPID: int | None
+    audioSessionPIDs: list[int] | None
+    sessions: list
+    execPath: str | None
+    isMaster: bool
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.friendlyName

@@ -2,7 +2,32 @@ from models.audio_app import AudioApp
 from audio import getGroupedAudioSessions
 from processes import getProcessName, getProcessPath
 
-def createAudioApp(name, audio_pids, top_pid, sessions, exec_path, is_master):
+def createAudioApp(name: str, audio_pids: list[int] | None, top_pid: int | None, sessions: list, exec_path: str | None, is_master: bool) -> AudioApp:
+    """
+    Creates an AudioApp instance.
+
+    Args:
+        name:
+            Display name of the application.
+
+        audio_pids:
+            Audio session process IDs associated with the application.
+
+        top_pid:
+            Top-level process PID representing the application.
+
+        sessions:
+            Audio sessions associated with the application.
+
+        exec_path:
+            Executable path of the application.
+
+        is_master:
+            Whether the AudioApp represents the master volume control.
+
+    Returns:
+        Newly created AudioApp instance.
+    """
     return AudioApp(
 
         friendlyName = name,
@@ -21,7 +46,14 @@ def createAudioApp(name, audio_pids, top_pid, sessions, exec_path, is_master):
 
     )
 
-def discoverAudioApps():
+def discoverAudioApps() -> list[AudioApp]:
+    """
+    Discovers all active audio applications.
+
+    Returns:
+        List of AudioApp objects representing currently active
+        audio-producing applications.
+    """
 
     audioSessions = getGroupedAudioSessions()
 
@@ -41,25 +73,22 @@ def discoverAudioApps():
 
     return output
 
-def mergeApps(oldApps, newApps):
-
+def mergeApps(oldApps: list[AudioApp],newApps: list[AudioApp]) -> list[AudioApp]:
     """
-    Merges two AudioApp lists while preserving the user's previous ordering.
+    Preserves the ordering of the previous application list.
 
-    Parameters
-    ----------
-    oldApps : list[AudioApp]
-        Previously displayed application list.
+    Args:
+        oldApps:
+            Previously displayed applications.
 
-    newApps : list[AudioApp]
-        Newly discovered application list.
+        newApps:
+            Newly discovered applications.
 
-    Returns
-    -------
-    list[AudioApp]
-        Updated application list preserving the previous order,
-        removing closed applications and appending new applications
-        at the end.
+    Returns:
+        Updated application list with:
+        - closed applications removed,
+        - existing applications kept in their previous order,
+        - new applications appended at the end.
     """
 
 
@@ -93,7 +122,18 @@ def mergeApps(oldApps, newApps):
 
     return result
 
-def refreshApps(oldApps=None):
+def refreshApps(oldApps: list[AudioApp] | None = None) -> list[AudioApp]:
+
+    """
+    Creates an updated AudioApp list.
+
+    Args:
+        oldApps:
+            Previous application list. If None, a new list is created.
+
+    Returns:
+        List of active AudioApp objects, including the master volume entry.
+    """
 
     newApps = [createAudioApp("master", None, None, [None], None, True)]
     newApps += discoverAudioApps()

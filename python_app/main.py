@@ -24,14 +24,19 @@ while True:
                 time.sleep(1)
                 continue
 
-
         msg = con.readSerial(ser)
         if msg:
-            apps, selected_index, debmsg = com.handleSerialCom(msg, apps, selected_index)
-            deb.debMsgRead(apps, selected_index, debmsg)
 
-  
+            result = com.handleSerialCom(msg, apps, selected_index)
 
+            apps = result.apps
+            selected_index = result.selected_index
+
+            deb.printDebugMessage(
+                apps,
+                selected_index,
+                result.debug_message
+            )
 
     except(serial.SerialException):
         if ser is not None:

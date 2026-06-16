@@ -1,7 +1,15 @@
 import serial.tools.list_ports
 import serial
 
-def findDevicePort():
+def findDevicePort() -> str | None:
+    """
+    Searches for the volume controller USB device.
+
+    Returns:
+        str | None:
+            Serial port name assigned to the device if found
+            (e.g. "COM5"), otherwise None.
+    """
     for port in serial.tools.list_ports.comports():
 
         if (
@@ -14,9 +22,20 @@ def findDevicePort():
 
     return None
 
-def createSerialConnection(puerto):
+def createSerialConnection(port: str) -> serial.Serial:
+    """
+    Creates a serial connection to the specified port.
+
+    Args:
+        port:
+            Serial port name.
+
+    Returns:
+        serial.Serial:
+            Configured serial connection object.
+    """
     return serial.Serial(
-        port= puerto,
+        port=port,
         baudrate=115200,
         parity=serial.PARITY_NONE,
         stopbits=serial.STOPBITS_ONE,
@@ -24,7 +43,15 @@ def createSerialConnection(puerto):
         timeout=2
     )
 
-def connect():
+def connect() -> serial.Serial | None:
+    """
+    Attempts to connect to the volume controller device.
+
+    Returns:
+        serial.Serial | None:
+            Serial connection if the device is found,
+            otherwise None.
+    """
     port = findDevicePort()
 
     if port is None:
@@ -32,7 +59,19 @@ def connect():
 
     return createSerialConnection(port)
 
-def readSerial(ser):
+def readSerial(ser: serial.Serial) -> str | None:
+    """
+    Reads a single line from the serial connection.
+
+    Args:
+        ser:
+            Active serial connection.
+
+    Returns:
+        str | None:
+            Decoded message if data was received,
+            otherwise None.
+    """
 
     line = ser.readline()
     
@@ -41,7 +80,15 @@ def readSerial(ser):
     
     return None
 
-def reconnect():
+def reconnect() -> serial.Serial | None:
+    """
+    Attempts to reconnect to the volume controller device.
+
+    Returns:
+        serial.Serial | None:
+            Serial connection if reconnection succeeds,
+            otherwise None.
+    """
     ser = connect()
 
     if ser is not None:

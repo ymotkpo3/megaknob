@@ -1,9 +1,29 @@
 from pycaw.pycaw import AudioUtilities
 import processes as proc
 
+from models.audio_app import AudioApp
+
 device = AudioUtilities.GetSpeakers()
 
-def getGroupedAudioSessions():
+def getGroupedAudioSessions() -> dict[int, dict[str, list]]:
+    """
+    Groups audio sessions by their top-level process.
+
+    Multiple audio sessions may belong to the same application.
+    This function resolves the user-facing process and groups all
+    related audio sessions under a single PID.
+
+    Returns:
+        Dictionary indexed by friendly process PID.
+
+        Each entry contains:
+            audioPIDs:
+                List of audio session process IDs.
+
+            sessions:
+                List of PyCAW audio sessions associated with
+                the application.
+    """
 
     result = {}
 
@@ -35,7 +55,14 @@ def getGroupedAudioSessions():
     return result
 
 
-def volumeUp(app):
+def volumeUp(app: AudioApp) -> None:
+    """
+    Increases the volume of all audio sessions belonging to an application.
+
+    Args:
+        app:
+            Target AudioApp.
+    """
 
     for session in app.sessions:
 
@@ -47,7 +74,14 @@ def volumeUp(app):
 
         volume.SetMasterVolume(new_volume, None)
 
-def volumeDown(app):
+def volumeDown(app: AudioApp) -> None:
+    """
+    Decreases the volume of all audio sessions belonging to an application.
+
+    Args:
+        app:
+            Target AudioApp.
+    """
     
     for session in app.sessions:
 
@@ -59,7 +93,10 @@ def volumeDown(app):
 
         volume.SetMasterVolume(new_volume, None)
 
-def masterVolUp():
+def masterVolUp() -> None:
+    """
+    Increases the system master volume.
+    """
 
     current = device.EndpointVolume.GetMasterVolumeLevelScalar()
 
@@ -69,7 +106,10 @@ def masterVolUp():
 
 
 
-def masterVolDown():
+def masterVolDown() -> None:
+    """
+    Decreases the system master volume.
+    """
 
     current = device.EndpointVolume.GetMasterVolumeLevelScalar()
 
@@ -80,9 +120,22 @@ def masterVolDown():
 
     device.EndpointVolume.SetMasterVolumeLevelScalar(new_volume, None)
 
-def getVolume(app):
+def getVolume(app: AudioApp) -> float:
+    """
+    Returns the current volume level of an application.
 
-    if app.friendlyName == "master":
+    For the master entry, the system master volume is returned.
+    For applications, the volume of the first audio session is used.
+
+    Args:
+        app:
+            Target AudioApp.
+
+    Returns:
+        Current volume level in the range [0.0, 1.0].
+    """
+
+    if app.isMaster:
         return device.EndpointVolume.GetMasterVolumeLevelScalar()
 
     if not app.sessions:

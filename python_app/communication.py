@@ -1,51 +1,78 @@
 import audio as au
 import appBuilder as ab
+from models.audio_app import AudioApp
+from models.serial_com_result import SerialComResult
 
-def handleSerialCom(msg, apps, sel_index):
+def handleSerialCom(
+    msg: str,
+    apps: list[AudioApp],
+    selected_index: int
+) -> SerialComResult:
+    """
+    Processes a command received from the volume controller.
+
+    Depending on the received command, the application list,
+    selected application, or audio volume may be modified.
+
+    Args:
+        msg:
+            Command received through the serial connection.
+
+        apps:
+            Current AudioApp list.
+
+        selected_index:
+            Index of the currently selected AudioApp.
+
+    Returns:
+        SerialComResult:
+            Result containing the updated application list,
+            selected application index and debug message.
+    """
     if msg == "update":
         apps = ab.refreshApps(apps)
 
-        if sel_index >= len(apps):
-            sel_index = 0
+        if selected_index >= len(apps):
+            selected_index = 0
 
-        return apps, sel_index, "update"
+        return SerialComResult(apps, selected_index, "update")
         
 
     elif msg == "click":
-        return apps, sel_index, "select"
+        return SerialComResult(apps, selected_index, "select")
     
     elif msg == "master":
 
         apps = ab.refreshApps(apps)
 
-        return apps, 0, "master"
+        return SerialComResult(apps, 0, "master")
 
     elif msg == "appUP":
 
-        sel_index = (sel_index + 1) % len(apps)
+        selected_index = (selected_index + 1) % len(apps)
 
-        return apps, sel_index, "appUP"
+        return SerialComResult(apps, selected_index, "appUP")
 
     elif msg == "appDWN":
 
-        sel_index = (sel_index - 1) % len(apps)
+        selected_index = (selected_index - 1) % len(apps)
 
-        return apps, sel_index, "appDWN"
+        return SerialComResult(apps, selected_index, "appDWN")
 
     elif msg == "volUP":
-        if apps[sel_index].isMaster:
+        if apps[selected_index].isMaster:
             au.masterVolUp()
-            return apps, sel_index, "master volUP"
+            return SerialComResult(apps, selected_index, "master volUP")
 
-        au.volumeUp(apps[sel_index])
-        return apps, sel_index, "volUP"
+        au.volumeUp(apps[selected_index])
+        return SerialComResult(apps, selected_index, "volUP")
   
     elif msg == "volDWN":
-        if apps[sel_index].isMaster:
+        if apps[selected_index].isMaster:
             au.masterVolDown()
-            return apps, sel_index, "master volDWN"
+            return SerialComResult(apps, selected_index, "master volDWN")
 
-        au.volumeDown(apps[sel_index])
-        return apps, sel_index, "volDWN"
+        au.volumeDown(apps[selected_index])
+        return SerialComResult(apps, selected_index, "volDWN")
     else:
-        return apps,sel_index, f"Unknown message: {msg}"
+        return SerialComResult(apps,selected_index, f"Unknown message: {msg}")

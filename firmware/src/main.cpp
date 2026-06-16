@@ -1,7 +1,6 @@
 #include <Arduino.h>
 #include <RotaryEncoder.h>
 
-
 /*
 Serial commands sent to the host application:
 
@@ -14,7 +13,6 @@ volUP   -> increase selected volume
 volDWN  -> decrease selected volume
 */
 
-
 // Encoder operating modes.
 // MODE_SELECT: rotate to browse applications.
 // MODE_VOLUME: rotate to adjust volume.
@@ -25,7 +23,6 @@ constexpr int MODE_VOLUME = 1;
 static int mode = MODE_VOLUME;
 
 constexpr int SW = 0;
-
 
 // Rotary encoder used to navigate applications
 // and adjust volume.
@@ -48,7 +45,6 @@ bool buttonPressed = false;
 bool longPressSent = false;
 unsigned long pressStart = 0;
 
-
 /**
  * Main firmware loop.
  *
@@ -58,6 +54,7 @@ unsigned long pressStart = 0;
  * - button long-press detection,
  * - serial communication with the host application.
  */
+
 void loop() {
 
   encoder.tick();
@@ -67,6 +64,7 @@ void loop() {
   if (currentState && !buttonPressed) {
 
     // Button press debounce.
+    
     delay(30);
 
     if (digitalRead(SW) != LOW)
@@ -79,6 +77,7 @@ void loop() {
   }
 
   // Generate a long-press event after 700 ms.
+
   if (currentState && !longPressSent && millis() - pressStart >= 700) {
 
     Serial.println("master");
@@ -89,7 +88,9 @@ void loop() {
 
 
   if (!currentState && buttonPressed) {
+
     // Button press debounce.
+    
     delay(30);
 
     if (digitalRead(SW) == LOW)
@@ -100,6 +101,7 @@ void loop() {
     buttonPressed = false;
 
     // Short click detected.
+
     if (!longPressSent) {
       Serial.println("click");
       if(mode == MODE_VOLUME){
@@ -113,9 +115,11 @@ void loop() {
   }
 
   // Previous encoder position used to detect rotation direction.
+
   static int pos = 0;
 
   // Current encoder position.
+
   int newPos = encoder.getPosition();
 
   if (pos < newPos && mode == MODE_VOLUME) {

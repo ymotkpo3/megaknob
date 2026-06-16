@@ -1,6 +1,5 @@
 import psutil
 from config import SYSTEM, IGNORED
-from win32.win32gui import *
 import win32com.shell.shell as shell
 import win32com.shell.shellcon as shellcon
 

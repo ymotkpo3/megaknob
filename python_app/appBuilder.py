@@ -1,23 +1,27 @@
-from models import audio_app as app
+from models.audio_app import AudioApp
 from audio import getGroupedAudioSessions
 from processes import getProcessName, getProcessPath
 
-def createAppObject(NAME, APID, FPID, ASESS, EXEC):
-    return app.AudioApp(
+def createAudioApp(name, audio_pids, top_pid, sessions, exec_path, is_master):
+    return AudioApp(
 
-        friendlyName = NAME,
+        friendlyName = name,
 
-        audioSessionPIDs = APID,
+        audioSessionPIDs = audio_pids,
 
-        topProcessPID = FPID,
+        topProcessPID = top_pid,
 
-        sessions = ASESS,
+        sessions = sessions,
 
-        execPath = EXEC
+        execPath = exec_path,
+
+        isMaster = is_master
+
+
 
     )
 
-def createAllAppsObjectsList():
+def discoverAudioApps():
 
     audioSessions = getGroupedAudioSessions()
 
@@ -33,11 +37,31 @@ def createAllAppsObjectsList():
 
         exec = getProcessPath(friendlyPID)
 
-        output.append(createAppObject(fname, audioPIDs, friendlyPID, sessions, exec))
+        output.append(createAudioApp(fname, audioPIDs, friendlyPID, sessions, exec, False))
 
     return output
 
 def mergeApps(oldApps, newApps):
+
+    """
+    Merges two AudioApp lists while preserving the user's previous ordering.
+
+    Parameters
+    ----------
+    oldApps : list[AudioApp]
+        Previously displayed application list.
+
+    newApps : list[AudioApp]
+        Newly discovered application list.
+
+    Returns
+    -------
+    list[AudioApp]
+        Updated application list preserving the previous order,
+        removing closed applications and appending new applications
+        at the end.
+    """
+
 
     old_ids = []
     new_ids = []
@@ -71,8 +95,8 @@ def mergeApps(oldApps, newApps):
 
 def refreshApps(oldApps=None):
 
-    newApps = [createAppObject("master", None, None, [None], None)]
-    newApps += createAllAppsObjectsList()
+    newApps = [createAudioApp("master", None, None, [None], None, True)]
+    newApps += discoverAudioApps()
 
     if oldApps is None:
         return newApps

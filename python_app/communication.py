@@ -1,5 +1,5 @@
 import audio as au
-import app_builder as ab
+import appBuilder as ab
 
 def handleSerialCom(msg, apps, sel_index):
     if msg == "update":
@@ -33,20 +33,19 @@ def handleSerialCom(msg, apps, sel_index):
         return apps, sel_index, "appDWN"
 
     elif msg == "volUP":
-        if apps[sel_index].friendlyName == "master":
+        if apps[sel_index].isMaster:
             au.masterVolUp()
             return apps, sel_index, "master volUP"
-        else:
-            au.volumeUp(apps[sel_index])
-            return apps, sel_index, "volUP"
+
+        au.volumeUp(apps[sel_index])
+        return apps, sel_index, "volUP"
   
     elif msg == "volDWN":
-        if apps[sel_index].friendlyName == "master":
+        if apps[sel_index].isMaster:
             au.masterVolDown()
             return apps, sel_index, "master volDWN"
-        else:
-            au.volumeDown(apps[sel_index])
-            return apps, sel_index, "volDWN"
+
+        au.volumeDown(apps[sel_index])
+        return apps, sel_index, "volDWN"
     else:
-        print(f"Unknown message: {msg}")
-        return apps,sel_index, "unknown"
+        return apps,sel_index, f"Unknown message: {msg}"

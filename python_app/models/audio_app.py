@@ -6,7 +6,8 @@ class AudioApp:
         topProcessPID,
         audioSessionPIDs,
         sessions,
-        execPath
+        execPath,
+        isMaster
     ):
 
         self.friendlyName = friendlyName
@@ -18,6 +19,8 @@ class AudioApp:
         self.sessions = sessions
 
         self.execPath = execPath
+
+        self.isMaster = isMaster
 
     def __repr__(self):
         return self.friendlyName

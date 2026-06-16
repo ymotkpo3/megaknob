@@ -38,11 +38,10 @@ Megaknob uses a single encoder and dynamic application selection, resulting in a
 
 ### Planned
 
-- [ ] Graphical user interface
-- [ ] RGB LED feedback
-- [ ] Windows installer
-- [ ] Custom application aliases
-- [ ] Better process identification
-- [ ] Multi-platform support
 - [ ] Overlay notifications
+- [ ] Windows installer
+- [ ] Better process identification
+- [ ] Graphical user interface
 - [ ] Detailed project wiki
+- [ ] Multi-platform support
+- [ ] RGB LED feedback

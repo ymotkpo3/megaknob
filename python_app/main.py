@@ -14,7 +14,9 @@ print(apps[selected_index])
 ser = con.connect()
 
 while True:
+
     try:
+        
         if ser is None:
             ser = con.reconnect()
             if ser is not None:

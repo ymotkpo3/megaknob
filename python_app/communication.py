@@ -3,11 +3,7 @@ import appBuilder as ab
 from models.audio_app import AudioApp
 from models.serial_com_result import SerialComResult
 
-def handleSerialCom(
-    msg: str,
-    apps: list[AudioApp],
-    selected_index: int
-) -> SerialComResult:
+def handleSerialCom(msg: str, apps: list[AudioApp], selected_index: int) -> SerialComResult:
     """
     Processes a command received from the volume controller.
 
@@ -36,8 +32,7 @@ def handleSerialCom(
             selected_index = 0
 
         return SerialComResult(apps, selected_index, "update")
-        
-
+    
     elif msg == "click":
         return SerialComResult(apps, selected_index, "select")
     

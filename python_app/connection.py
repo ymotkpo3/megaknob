@@ -24,6 +24,14 @@ def createSerialConnection(puerto):
         timeout=2
     )
 
+def connect():
+    port = findDevicePort()
+
+    if port is None:
+        return None
+
+    return createSerialConnection(port)
+
 def readSerial(ser):
 
     line = ser.readline()
@@ -32,3 +40,11 @@ def readSerial(ser):
         return line.decode().strip()
     
     return None
+
+def reconnect():
+    ser = connect()
+
+    if ser is not None:
+        print("RECONNECTED")
+
+    return ser

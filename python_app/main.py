@@ -1,50 +1,39 @@
+import time
 import connection as con
 import app_builder as ab
 import debug as deb
 import serial
 import communication as com
 
-appsNoMaster = ab.createAllAppsObjectsList()
-
-apps = [ab.createAppObject("master", None, None, [None], None)]
-apps += appsNoMaster
-
-deb.appDebug(apps)
-
+apps = ab.refreshApps()
 selected_index = 0
 
+deb.appDebug(apps)
 print(apps[selected_index])
 
-port = con.findDevicePort()
-
-if port is not None:
-    ser = con.createSerialConnection(port)
-    connected = True
-else:
-    ser = None
-    connected = False
+ser = con.connect()
 
 while True:
     try:
-        if connected == False:
-            ser = con.createSerialConnection(con.findDevicePort())
-            if ser.port != None:
-                connected = True
-                print("RECONNECTED")
+        if ser is None:
+            ser = con.reconnect()
+            if ser is not None:
                 selected_index = 0
                 print(apps[selected_index])
+            else:
+                time.sleep(1)
+                continue
 
 
-        if connected:
-            msg = con.readSerial(ser)
-            if msg:
-                apps, selected_index, debmsg = com.handleSerialCom(msg, apps, selected_index)
-                deb.debMsgRead(apps, selected_index, debmsg)
+        msg = con.readSerial(ser)
+        if msg:
+            apps, selected_index, debmsg = com.handleSerialCom(msg, apps, selected_index)
+            deb.debMsgRead(apps, selected_index, debmsg)
+
   
 
 
     except(serial.SerialException):
-        if connected == True:
-            connected = False
+        if ser is not None:
             print("DISCONNECTED")
-        continue
+        ser = None

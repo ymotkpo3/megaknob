@@ -69,10 +69,12 @@ def mergeApps(oldApps, newApps):
 
     return result
 
-def refreshApps(apps):
+def refreshApps(oldApps=None):
 
-    newApps = [createAppObject("master", None, None, [None])]
+    newApps = [createAppObject("master", None, None, [None], None)]
     newApps += createAllAppsObjectsList()
 
-    return mergeApps(apps, newApps)
+    if oldApps is None:
+        return newApps
 
+    return mergeApps(oldApps, newApps)

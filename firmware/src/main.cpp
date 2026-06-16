@@ -3,7 +3,7 @@
 
 int MODE_SELECT = 0;
 int MODE_VOLUME = 1;
-static int mode = 0;
+static int mode = 1;
 
 
 #define SW 0

@@ -1,9 +1,11 @@
 import time
-import connection as con
-import appBuilder as ab
-import debug as deb
 import serial
-import communication as com
+
+from python_app import connection as con
+from python_app import appBuilder as ab
+from python_app import communication as com
+from python_app import debug as deb
+
 
 apps = ab.refreshApps()
 selected_index = 0

@@ -1,5 +1,5 @@
 import psutil
-from config import SYSTEM, IGNORED
+from python_app.config import SYSTEM, IGNORED
 import win32com.shell.shell as shell
 import win32com.shell.shellcon as shellcon
 

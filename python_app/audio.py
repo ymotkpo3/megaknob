@@ -1,7 +1,7 @@
 from pycaw.pycaw import AudioUtilities
-import processes as proc
+from python_app import processes as proc
 
-from models.audio_app import AudioApp
+from python_app.models.audio_app import AudioApp
 
 device = AudioUtilities.GetSpeakers()
 

@@ -1,4 +1,4 @@
-from models.audio_app import AudioApp
+from python_app.models.audio_app import AudioApp
 
 def appDebug(apps: list[AudioApp]) -> None:
     """

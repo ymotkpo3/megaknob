@@ -1,6 +1,6 @@
-from models.audio_app import AudioApp
-from audio import getGroupedAudioSessions
-from processes import getProcessName, getProcessPath
+from python_app.models.audio_app import AudioApp
+from python_app import audio as au
+from python_app.processes import getProcessName, getProcessPath
 
 def createAudioApp(name: str, audio_pids: list[int] | None, top_pid: int | None, sessions: list, exec_path: str | None, is_master: bool) -> AudioApp:
     """
@@ -55,7 +55,7 @@ def discoverAudioApps() -> list[AudioApp]:
         audio-producing applications.
     """
 
-    audioSessions = getGroupedAudioSessions()
+    audioSessions = au.getGroupedAudioSessions()
 
     output = []
 

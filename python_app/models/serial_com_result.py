@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from models.audio_app import AudioApp
+from python_app.models.audio_app import AudioApp
 
 
 @dataclass

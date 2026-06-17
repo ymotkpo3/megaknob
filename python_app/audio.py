@@ -55,7 +55,7 @@ def getGroupedAudioSessions() -> dict[int, dict[str, list]]:
     return result
 
 
-def volumeUp(app: AudioApp) -> None:
+def volumeUp(app: AudioApp | None = None) -> None:
     """
     Increases the volume of all audio sessions belonging to an application.
 
@@ -63,18 +63,24 @@ def volumeUp(app: AudioApp) -> None:
         app:
             Target AudioApp.
     """
-
-    for session in app.sessions:
-
-        volume = session.SimpleAudioVolume
-
-        current = volume.GetMasterVolume()
+    if app is None:
+        current = device.EndpointVolume.GetMasterVolumeLevelScalar()
 
         new_volume = min(1.0, current + 0.02)
 
-        volume.SetMasterVolume(new_volume, None)
+        device.EndpointVolume.SetMasterVolumeLevelScalar(new_volume, None)
+    else:    
+        for session in app.sessions:
 
-def volumeDown(app: AudioApp) -> None:
+            volume = session.SimpleAudioVolume
+
+            current = volume.GetMasterVolume()
+
+            new_volume = min(1.0, current + 0.02)
+
+            volume.SetMasterVolume(new_volume, None)
+
+def volumeDown(app: AudioApp | None = None) -> None:
     """
     Decreases the volume of all audio sessions belonging to an application.
 
@@ -82,43 +88,25 @@ def volumeDown(app: AudioApp) -> None:
         app:
             Target AudioApp.
     """
-    
-    for session in app.sessions:
+    if app is None:
+        current = device.EndpointVolume.GetMasterVolumeLevelScalar()
 
-        volume = session.SimpleAudioVolume
+        if current <= 0.02:
+            new_volume = 0
+        elif current > 0:
+            new_volume = current - 0.02
 
-        current = volume.GetMasterVolume()
+        device.EndpointVolume.SetMasterVolumeLevelScalar(new_volume, None)
+    else:
+        for session in app.sessions:
 
-        new_volume = max(0.0, current - 0.02)
+            volume = session.SimpleAudioVolume
 
-        volume.SetMasterVolume(new_volume, None)
+            current = volume.GetMasterVolume()
 
-def masterVolUp() -> None:
-    """
-    Increases the system master volume.
-    """
+            new_volume = max(0.0, current - 0.02)
 
-    current = device.EndpointVolume.GetMasterVolumeLevelScalar()
-
-    new_volume = min(1.0, current + 0.02)
-
-    device.EndpointVolume.SetMasterVolumeLevelScalar(new_volume, None)
-
-
-
-def masterVolDown() -> None:
-    """
-    Decreases the system master volume.
-    """
-
-    current = device.EndpointVolume.GetMasterVolumeLevelScalar()
-
-    if current <= 0.02:
-        new_volume = 0
-    elif current > 0:
-        new_volume = current - 0.02
-
-    device.EndpointVolume.SetMasterVolumeLevelScalar(new_volume, None)
+            volume.SetMasterVolume(new_volume, None)
 
 def getVolume(app: AudioApp) -> float:
     """

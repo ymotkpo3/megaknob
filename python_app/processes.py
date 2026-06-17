@@ -94,27 +94,27 @@ def getProcessPath(pid: int) -> str | None:
     ):
         return None
     
-def getProcessIcon(path: str):
-    """
-    Retrieves the Windows icon associated with an executable.
+# def getProcessIcon(path: str):
+#     """
+#     Retrieves the Windows icon associated with an executable.
 
-    Args:
-        path:
-            Executable file path.
+#     Args:
+#         path:
+#             Executable file path.
 
-    Returns:
-        Native Windows icon handle if successful,
-        otherwise None.
-    """
+#     Returns:
+#         Native Windows icon handle if successful,
+#         otherwise None.
+#     """
 
-    success, info = shell.SHGetFileInfo(
-        path,
-        0,
-        shellcon.SHGFI_ICON |
-        shellcon.SHGFI_LARGEICON
-    )
+#     success, info = shell.SHGetFileInfo(
+#         path,
+#         0,
+#         shellcon.SHGFI_ICON |
+#         shellcon.SHGFI_LARGEICON
+#     )
 
-    if not success:
-        return None
+#     if not success:
+#         return None
 
-    return info[0]
+#     return info[0]

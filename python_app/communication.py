@@ -1,7 +1,7 @@
-from python_app import audio as au
-from python_app import appBuilder as ab
 from python_app.models.audio_app import AudioApp
 from python_app.models.serial_com_result import SerialComResult
+from python_app import actions as act
+
 
 def handleSerialCom(msg: str, apps: list[AudioApp], selected_index: int) -> SerialComResult:
     """
@@ -25,49 +25,55 @@ def handleSerialCom(msg: str, apps: list[AudioApp], selected_index: int) -> Seri
             Result containing the updated application list,
             selected application index and debug message.
     """
+    
     if msg == "update":
-        apps = ab.refreshApps(apps)
 
+        apps = act.refresh(apps)
         if selected_index >= len(apps):
+
             selected_index = 0
 
         return SerialComResult(apps, selected_index, "update")
     
     elif msg == "click":
-        return SerialComResult(apps, selected_index, "select")
+
+        return SerialComResult(apps, selected_index, "select")  
     
     elif msg == "master":
 
-        apps = ab.refreshApps(apps)
-
+        apps = act.refresh(apps)
         return SerialComResult(apps, 0, "master")
-
+    
     elif msg == "appUP":
 
         selected_index = (selected_index + 1) % len(apps)
-
         return SerialComResult(apps, selected_index, "appUP")
-
+    
     elif msg == "appDWN":
 
         selected_index = (selected_index - 1) % len(apps)
-
         return SerialComResult(apps, selected_index, "appDWN")
-
+    
     elif msg == "volUP":
+
         if apps[selected_index].isMaster:
-            au.masterVolUp()
+
+            act.masterVolUp()
             return SerialComResult(apps, selected_index, "master volUP")
-
-        au.volumeUp(apps[selected_index])
+        
+        act.volUp(apps[selected_index])
         return SerialComResult(apps, selected_index, "volUP")
-  
+    
     elif msg == "volDWN":
-        if apps[selected_index].isMaster:
-            au.masterVolDown()
-            return SerialComResult(apps, selected_index, "master volDWN")
 
-        au.volumeDown(apps[selected_index])
+        if apps[selected_index].isMaster:
+
+            act.masterVolDown()
+            return SerialComResult(apps, selected_index, "master volDWN")
+        
+        act.volDown(apps[selected_index])
         return SerialComResult(apps, selected_index, "volDWN")
+    
     else:
+
         return SerialComResult(apps,selected_index, f"Unknown message: {msg}")

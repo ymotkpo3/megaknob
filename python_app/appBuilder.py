@@ -123,7 +123,6 @@ def mergeApps(oldApps: list[AudioApp],newApps: list[AudioApp]) -> list[AudioApp]
     return result
 
 def refreshApps(oldApps: list[AudioApp] | None = None) -> list[AudioApp]:
-
     """
     Creates an updated AudioApp list.
 

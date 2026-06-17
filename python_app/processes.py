@@ -90,31 +90,5 @@ def getProcessPath(pid: int) -> str | None:
 
     except (
         psutil.NoSuchProcess,
-        psutil.AccessDenied
-    ):
+        psutil.AccessDenied):
         return None
-    
-# def getProcessIcon(path: str):
-#     """
-#     Retrieves the Windows icon associated with an executable.
-
-#     Args:
-#         path:
-#             Executable file path.
-
-#     Returns:
-#         Native Windows icon handle if successful,
-#         otherwise None.
-#     """
-
-#     success, info = shell.SHGetFileInfo(
-#         path,
-#         0,
-#         shellcon.SHGFI_ICON |
-#         shellcon.SHGFI_LARGEICON
-#     )
-
-#     if not success:
-#         return None
-
-#     return info[0]

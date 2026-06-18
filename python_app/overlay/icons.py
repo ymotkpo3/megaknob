@@ -2,7 +2,7 @@ from PySide6.QtGui import QImage, QPixmap
 import win32com.shell.shell as shell
 import win32com.shell.shellcon as shellcon
 
-def getProcessPixmap(path):
+def getAppPixmap(path):
 
     success, info = shell.SHGetFileInfo(
         path,

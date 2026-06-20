@@ -25,7 +25,7 @@ Megaknob uses a single encoder and dynamic application selection, resulting in a
 2. Rotate to choose an application.
 3. Press again to enter volume control mode.
 4. Rotate to adjust volume.
-5. Hold the knob to instantly return to Master Volume.
+5. Hold the knob to instantly return to Master Volume control.
 
 ## Roadmap
 

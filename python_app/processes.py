@@ -54,9 +54,9 @@ def resolveFriendlyProcessPID(PID: int) -> int | None:
         psutil.ZombieProcess):
         return None
 
-def getProcessName(PID: int) -> str:
+def getProcessNameAndPath(PID: int) -> str:
     """
-    Returns the executable name of a process.
+    Returns the executable name of a process and the executable path of a process.
 
     Args:
         PID:
@@ -64,11 +64,21 @@ def getProcessName(PID: int) -> str:
 
     Returns:
         Process executable name.
+        Full executable path if available,
+        otherwise None.
     """
 
-    session = psutil.Process(PID)
-    
-    return session.name()
+    try:
+        session = psutil.Process(PID)
+        
+        return session.name(), session.exe()
+
+    except (
+        psutil.NoSuchProcess,
+        psutil.AccessDenied):
+        return None, None
+
+
 
 def getProcessPath(pid: int) -> str | None:
     """

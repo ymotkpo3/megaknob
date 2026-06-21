@@ -41,7 +41,6 @@ def handleSerialCom(msg: str, apps: list[AudioApp], selected_index: int) -> Seri
     
     elif msg == "master":
 
-        apps = act.refresh(apps)
         return SerialComResult(apps, 0, "master")
     
     elif msg == "appUP":

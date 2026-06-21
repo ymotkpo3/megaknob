@@ -1,6 +1,6 @@
 from python_app.models.audio_app import AudioApp
 from python_app import audio as au
-from python_app.processes import getProcessName, getProcessPath
+from python_app.processes import getProcessNameAndPath
 
 def createAudioApp(name: str, audio_pids: list[int] | None, top_pid: int | None, sessions: list, exec_path: str | None, is_master: bool) -> AudioApp:
     """
@@ -61,15 +61,13 @@ def discoverAudioApps() -> list[AudioApp]:
 
     for friendlyPID in audioSessions:
 
-        fname = getProcessName(friendlyPID)
+        fname, exec_path = getProcessNameAndPath(friendlyPID)
 
         audioPIDs = audioSessions[friendlyPID]["audioPIDs"]
 
         sessions = audioSessions[friendlyPID]["sessions"]
 
-        exec = getProcessPath(friendlyPID)
-
-        output.append(createAudioApp(fname, audioPIDs, friendlyPID, sessions, exec, False))
+        output.append(createAudioApp(fname, audioPIDs, friendlyPID, sessions, exec_path, False))
 
     return output
 

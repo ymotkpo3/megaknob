@@ -110,7 +110,6 @@ void loop() {
       } else if (mode == MODE_SELECT){
         mode = MODE_VOLUME;
       }
-      delay(400);
     }
   }
 

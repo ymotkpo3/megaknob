@@ -118,6 +118,7 @@ class Overlay(QWidget):
                 iconSize,
                 self.icon
             )
+            
     def showVolume(self, icon, volume):
 
         self.mode = "volume"

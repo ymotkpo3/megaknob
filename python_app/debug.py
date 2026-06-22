@@ -9,13 +9,8 @@ def appDebug(apps: list[AudioApp]) -> None:
             Application list to display.
     """
     for app in apps:
-        print(
-            app.friendlyName,
-            app.audioSessionPIDs,
-            app.topProcessPID,
-            len(app.sessions),
-            app.execPath
-        )
+        
+        print(app.friendlyName, app.audioSessionPIDs, app.topProcessPID, len(app.sessions), app.execPath)
 
 def printDebugMessage(apps: list[AudioApp], index: int, msg: str | None) -> None:
     """
@@ -33,19 +28,25 @@ def printDebugMessage(apps: list[AudioApp], index: int, msg: str | None) -> None
     """
 
     if msg is None:
+
         return
     
     elif msg == "update":
+
         appDebug(apps)
 
     elif msg == "master":
+
         print("long press master")
 
     elif msg == "appUP":
+
         print(apps[index])
         
     elif msg == "appDWN":
+
         print(apps[index])
 
     else:
+
         print(msg)

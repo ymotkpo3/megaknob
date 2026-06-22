@@ -12,11 +12,7 @@ def findDevicePort() -> str | None:
     """
     for port in serial.tools.list_ports.comports():
 
-        if (
-            port.vid == 0x2E8A
-            and
-            port.pid == 0x000A
-        ):
+        if (port.vid == 0x2E8A and port.pid == 0x000A):
 
             return port.device
 
@@ -55,6 +51,7 @@ def connect() -> serial.Serial | None:
     port = findDevicePort()
 
     if port is None:
+
         return None
 
     return createSerialConnection(port)
@@ -76,6 +73,7 @@ def readSerial(ser: serial.Serial) -> str | None:
     line = ser.readline()
     
     if line:
+
         return line.decode().strip()
     
     return None
@@ -92,6 +90,7 @@ def reconnect() -> serial.Serial | None:
     ser = connect()
 
     if ser is not None:
+
         print("RECONNECTED")
 
     return ser

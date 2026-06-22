@@ -30,7 +30,9 @@ def getGroupedAudioSessions() -> dict[int, dict[str, list]]:
     sessions = AudioUtilities.GetAllSessions()
 
     for session in sessions:
+
         if not session.Process:
+            
             continue
 
         audio_pid = session.Process.pid

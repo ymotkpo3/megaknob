@@ -27,16 +27,14 @@ def handleSerialCom(msg: str, apps: list[AudioApp], selected_index: int) -> Seri
     """
     
     if msg == "update":
-
         apps = act.refresh(apps)
-        if selected_index >= len(apps):
 
+        if selected_index >= len(apps):
             selected_index = 0
 
         return SerialComResult(apps, selected_index, "update")
     
     elif msg == "click":
-
         return SerialComResult(apps, selected_index, "select")  
     
     elif msg == "master":
@@ -44,35 +42,36 @@ def handleSerialCom(msg: str, apps: list[AudioApp], selected_index: int) -> Seri
         return SerialComResult(apps, 0, "master")
     
     elif msg == "appUP":
-
         selected_index = (selected_index + 1) % len(apps)
+
         return SerialComResult(apps, selected_index, "appUP")
     
     elif msg == "appDWN":
-
         selected_index = (selected_index - 1) % len(apps)
+
         return SerialComResult(apps, selected_index, "appDWN")
     
     elif msg == "volUP":
-
         if apps[selected_index].isMaster:
 
             act.masterVolUp()
+
             return SerialComResult(apps, selected_index, "master volUP")
         
         act.volUp(apps[selected_index])
+        
         return SerialComResult(apps, selected_index, "volUP")
     
     elif msg == "volDWN":
-
         if apps[selected_index].isMaster:
-
+            
             act.masterVolDown()
+
             return SerialComResult(apps, selected_index, "master volDWN")
         
         act.volDown(apps[selected_index])
+
         return SerialComResult(apps, selected_index, "volDWN")
     
     else:
-
         return SerialComResult(apps,selected_index, f"Unknown message: {msg}")

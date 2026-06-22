@@ -29,8 +29,8 @@ def resolveFriendlyProcessPID(PID: int) -> int | None:
             or None if no suitable process can be resolved.
     """
     try:
-        current = psutil.Process(PID)
         
+        current = psutil.Process(PID)
         best_match = None
 
         while current:
@@ -38,20 +38,19 @@ def resolveFriendlyProcessPID(PID: int) -> int | None:
             if current.name() in SYSTEM:
 
                 if best_match:
+
                     break
 
-            elif current.name() not in IGNORED:
 
+            elif current.name() not in IGNORED:
                 best_match = current
 
             current = current.parent()
 
         return best_match.pid
-    except(
-        AttributeError,
-        psutil.NoSuchProcess,
-        psutil.AccessDenied,
-        psutil.ZombieProcess):
+    
+    except(AttributeError, psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+
         return None
 
 def getProcessNameAndPath(PID: int) -> str:
@@ -73,7 +72,6 @@ def getProcessNameAndPath(PID: int) -> str:
         
         return session.name(), session.exe()
 
-    except (
-        psutil.NoSuchProcess,
-        psutil.AccessDenied):
+    except (psutil.NoSuchProcess, psutil.AccessDenied):
+
         return None, None

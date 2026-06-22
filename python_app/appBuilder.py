@@ -56,7 +56,6 @@ def discoverAudioApps() -> list[AudioApp]:
     """
 
     audioSessions = au.getGroupedAudioSessions()
-
     output = []
 
     for friendlyPID in audioSessions:
@@ -74,20 +73,16 @@ def discoverAudioApps() -> list[AudioApp]:
 def mergeApps(oldApps: list[AudioApp], newApps: list[AudioApp]) -> list[AudioApp]:
 
     old_map = {app.topProcessPID: app for app in oldApps}
-
     new_map = {app.topProcessPID: app for app in newApps}
-
     result = []
 
     for app in oldApps:
-
         pid = app.topProcessPID
 
         if pid in new_map:
             result.append(new_map[pid])
 
     for app in newApps:
-
         pid = app.topProcessPID
 
         if pid not in old_map:
@@ -111,6 +106,7 @@ def refreshApps(oldApps: list[AudioApp] | None = None) -> list[AudioApp]:
     newApps += discoverAudioApps()
 
     if oldApps is None:
+
         return newApps
 
     return mergeApps(oldApps, newApps)

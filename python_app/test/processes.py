@@ -1,5 +1,5 @@
 import psutil
-from python_app.config import SYSTEM, IGNORED
+from python_app.test.config import SYSTEM, IGNORED
 
 def resolveFriendlyProcessPID(PID: int) -> int | None:
     """

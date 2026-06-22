@@ -8,19 +8,11 @@ class Overlay(QWidget):
     def __init__(self):
         super().__init__()
 
-        # ----------------------------
-        # DATOS DEL OVERLAY
-        # ----------------------------
-
         self.volume = 0
 
         self.icon = None
 
         self.mode = "volume"
-
-        # ----------------------------
-        # CONFIGURACIÓN DE LA VENTANA
-        # ----------------------------
 
         self.setFixedSize(50, 50)
 
@@ -31,10 +23,6 @@ class Overlay(QWidget):
         )
 
     def paintEvent(self, event):
-
-        # ==================================================
-        # PREPARAR EL DIBUJANTE
-        # ==================================================
 
         painter = QPainter(self)
 
@@ -53,10 +41,6 @@ class Overlay(QWidget):
             Qt.black
         )
 
-        # ==================================================
-        # DEFINIR GEOMETRÍA DEL ANILLO
-        # ==================================================
-
         ringRect = QRect(
             3,
             3,
@@ -64,11 +48,7 @@ class Overlay(QWidget):
             44
         )
 
-        # ==================================================
-        # DIBUJAR CÍRCULO DE FONDO
-        # ==================================================
-
-        background_pen = QPen(Qt.white)
+        background_pen = QPen(Qt.gray)
 
         background_pen.setWidth(3)
 
@@ -76,14 +56,9 @@ class Overlay(QWidget):
 
         painter.drawEllipse(ringRect)
 
-        # ==================================================
-        # DIBUJAR PROGRESO DE VOLUMEN
-        # ==================================================
-
         if self.mode == "volume":
 
             progress_pen = QPen(Qt.white)
-
             progress_pen.setWidth(3)
 
             painter.setPen(progress_pen)
@@ -100,10 +75,6 @@ class Overlay(QWidget):
                 -span
             )
 
-        # ==================================================
-        # DIBUJAR ICONO
-        # ==================================================
-
         if self.icon:
 
             iconSize = 24
@@ -118,7 +89,7 @@ class Overlay(QWidget):
                 iconSize,
                 self.icon
             )
-            
+
     def showVolume(self, icon, volume):
 
         self.mode = "volume"

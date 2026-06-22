@@ -77,28 +77,3 @@ def getProcessNameAndPath(PID: int) -> str:
         psutil.NoSuchProcess,
         psutil.AccessDenied):
         return None, None
-
-
-
-def getProcessPath(pid: int) -> str | None:
-    """
-    Returns the executable path of a process.
-
-    Args:
-        pid:
-            Target process ID.
-
-    Returns:
-        Full executable path if available,
-        otherwise None.
-    """
-
-    try:
-        process = psutil.Process(pid)
-
-        return process.exe()
-
-    except (
-        psutil.NoSuchProcess,
-        psutil.AccessDenied):
-        return None

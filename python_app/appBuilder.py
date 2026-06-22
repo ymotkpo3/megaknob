@@ -71,52 +71,27 @@ def discoverAudioApps() -> list[AudioApp]:
 
     return output
 
-def mergeApps(oldApps: list[AudioApp],newApps: list[AudioApp]) -> list[AudioApp]:
-    """
-    Preserves the ordering of the previous application list.
+def mergeApps(oldApps: list[AudioApp], newApps: list[AudioApp]) -> list[AudioApp]:
 
-    Args:
-        oldApps:
-            Previously displayed applications.
+    old_map = {app.topProcessPID: app for app in oldApps}
 
-        newApps:
-            Newly discovered applications.
+    new_map = {app.topProcessPID: app for app in newApps}
 
-    Returns:
-        Updated application list with:
-        - closed applications removed,
-        - existing applications kept in their previous order,
-        - new applications appended at the end.
-    """
-
-
-    old_ids = []
-    new_ids = []
-
-    for app in oldApps:
-        old_ids.append(app.topProcessPID)
-
-    for app in newApps:
-        new_ids.append(app.topProcessPID)
-        
-    new = []
     result = []
 
+    for app in oldApps:
 
-    for app1 in oldApps:
-        for app2 in newApps:
-            if app1.topProcessPID == app2.topProcessPID:
-                result.append(app2)
-                break
-    
-    for new_id in new_ids:
-        if new_id not in old_ids:
-            for app in newApps:
-                if app.topProcessPID == new_id:
-                    new.append(app)
-                    break
+        pid = app.topProcessPID
 
-    result += new
+        if pid in new_map:
+            result.append(new_map[pid])
+
+    for app in newApps:
+
+        pid = app.topProcessPID
+
+        if pid not in old_map:
+            result.append(app)
 
     return result
 

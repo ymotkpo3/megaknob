@@ -23,6 +23,7 @@ while True:
             ser = con.reconnect()
 
             if ser is not None:
+                apps = ab.refreshApps()
                 selected_index = 0
                 print(apps[selected_index])
 

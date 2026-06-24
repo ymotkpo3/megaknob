@@ -1,10 +1,9 @@
 from pycaw.pycaw import AudioUtilities
 from python_app import processes as proc
+
 from python_app.models.audio_app import AudioApp
 
-
 device = AudioUtilities.GetSpeakers()
-
 
 def getGroupedAudioSessions() -> dict[int, dict[str, list]]:
     """
@@ -83,7 +82,6 @@ def volumeUp(app: AudioApp | None = None) -> None:
 
             volume.SetMasterVolume(new_volume, None)
 
-
 def volumeDown(app: AudioApp | None = None) -> None:
     """
     Decreases the volume of all audio sessions belonging to an application.
@@ -112,7 +110,6 @@ def volumeDown(app: AudioApp | None = None) -> None:
 
             volume.SetMasterVolume(new_volume, None)
 
-
 def getVolume(app: AudioApp) -> float:
     """
     Returns the current volume level of an application.
@@ -135,19 +132,3 @@ def getVolume(app: AudioApp) -> float:
         return 0
 
     return app.sessions[0].SimpleAudioVolume.GetMasterVolume()
-
-
-def setFixedVolume(PID, fixVolume):
-
-    session = AudioUtilities.GetProcessSession(PID)
-
-    session.SimpleAudioVolume.SetMasterVolume(fixVolume, None)
-
-
-def SyncVolume(PID, app: AudioApp):
-
-    session = AudioUtilities.GetProcessSession(PID)
-
-    new_volume = app.sessions[0].SimpleAudioVolume.GetMasterVolume()
-
-    session.SimpleAudioVolume.SetMasterVolume(getVolume(app), None)

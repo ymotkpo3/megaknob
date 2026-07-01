@@ -1,13 +1,11 @@
 import time
 import serial
 
-from pycaw import magic 
 from python_app import connection as con
 from python_app import appBuilder as ab
 from python_app import communication as com
 from python_app import debug as deb
 from python_app.models.app_state import state as ST
-from python_app.audioSessionListener import SessionListener as SL
 import python_app.audioSessionListener
 
 

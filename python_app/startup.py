@@ -1,92 +1,111 @@
 import sys
-import winreg
 from pathlib import Path
+
+from win32com.client import Dispatch
 
 
 APP_NAME = "Megaknob"
-RUN_KEY = r"Software\Microsoft\Windows\CurrentVersion\Run"
 
 
-def _getStartupCommand() -> str:
+def _getStartupFolder() -> Path:
     """
-    Builds the command used by Windows to start the app at login.
+    Returns the current user's Windows Startup folder.
+    """
+
+    shell = Dispatch("WScript.Shell")
+
+    return Path(
+        shell.SpecialFolders("Startup")
+    )
+
+
+def _getShortcutPath() -> Path:
+    """
+    Returns the path used for Megaknob's Startup shortcut.
+    """
+
+    return _getStartupFolder() / f"{APP_NAME}.lnk"
+
+
+def _getLaunchConfiguration() -> tuple[Path, str, Path, str]:
+    """
+    Builds the shortcut configuration for the current environment.
 
     Returns:
-        Command string stored in the Windows Run registry key.
+        Tuple containing the target executable, command-line arguments,
+        working directory and icon location.
     """
 
     if getattr(sys, "frozen", False):
-        return f'"{sys.executable}"'
+        executable = Path(sys.executable).resolve()
+
+        return (
+            executable,
+            "",
+            executable.parent,
+            f"{executable},0"
+        )
 
     project_root = Path(__file__).resolve().parent.parent
+    python_executable = Path(sys.executable).resolve()
 
     return (
-        f'cmd /c start "" '
-        f'/D "{project_root}" '
-        f'"{sys.executable}" -m python_app.main'
+        python_executable,
+        "-m python_app.main",
+        project_root,
+        f"{python_executable},0"
     )
 
 
 def isStartupEnabled() -> bool:
     """
-    Checks whether automatic startup is enabled for the current user.
-
-    Returns:
-        True if the startup registry entry exists.
+    Checks whether Megaknob's Startup shortcut exists.
     """
 
-    try:
-        with winreg.OpenKey(
-            winreg.HKEY_CURRENT_USER,
-            RUN_KEY,
-            0,
-            winreg.KEY_READ
-        ) as key:
-            winreg.QueryValueEx(key, APP_NAME)
-            return True
-
-    except FileNotFoundError:
-        return False
+    return _getShortcutPath().exists()
 
 
 def enableStartup() -> None:
     """
-    Enables automatic startup for the current Windows user.
+    Creates or updates Megaknob's shortcut in the Windows Startup folder.
     """
 
-    command = _getStartupCommand()
+    target, arguments, working_directory, icon_location = (
+        _getLaunchConfiguration()
+    )
 
-    with winreg.OpenKey(
-        winreg.HKEY_CURRENT_USER,
-        RUN_KEY,
-        0,
-        winreg.KEY_SET_VALUE
-    ) as key:
-        winreg.SetValueEx(
-            key,
-            APP_NAME,
-            0,
-            winreg.REG_SZ,
-            command
-        )
+    shell = Dispatch("WScript.Shell")
+
+    shortcut = shell.CreateShortCut(
+        str(_getShortcutPath())
+    )
+
+    shortcut.TargetPath = str(target)
+    shortcut.Arguments = arguments
+    shortcut.WorkingDirectory = str(working_directory)
+    shortcut.IconLocation = icon_location
+    shortcut.Description = "Megaknob volume controller"
+
+    shortcut.Save()
 
 
 def disableStartup() -> None:
     """
-    Disables automatic startup for the current Windows user.
+    Removes Megaknob's shortcut from the Windows Startup folder.
     """
 
-    try:
-        with winreg.OpenKey(
-            winreg.HKEY_CURRENT_USER,
-            RUN_KEY,
-            0,
-            winreg.KEY_SET_VALUE
-        ) as key:
-            winreg.DeleteValue(
-                key,
-                APP_NAME
-            )
+    shortcut_path = _getShortcutPath()
 
-    except FileNotFoundError:
-        pass
+    if shortcut_path.exists():
+        shortcut_path.unlink()
+
+
+def refreshStartupShortcut() -> None:
+    """
+    Updates the shortcut to point to the currently running version.
+
+    This is useful when Megaknob is renamed, moved or updated.
+    """
+
+    if isStartupEnabled():
+        enableStartup()

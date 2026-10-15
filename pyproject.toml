@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "megaknob"
-version = "0.8.2b1"
+version = "0.8.2"
 description = "Physical volume controller for Windows based on RP2040"
 readme = "README.md"
 requires-python = ">=3.13,<3.14"

@@ -12,7 +12,7 @@ def _getStartupFolder() -> Path:
     Returns the current user's Windows Startup folder.
     """
 
-    shell = Dispatch("WScript.Shell")
+    shell = Dispatch("{72C24DD5-D70A-438B-8A42-98424B88AFB8}")
 
     return Path(
         shell.SpecialFolders("Startup")

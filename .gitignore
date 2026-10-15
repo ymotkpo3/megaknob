@@ -1,8 +1,25 @@
+# Python virtual environments
+.venv/
+.venv_old/
+
+# Python cache
 __pycache__/
-*.pyc
-python_app/pruebas/
-./changelog.md
-.vscode
+*.py[cod]
+
+# Python packaging
+*.egg-info/
+
+# Development tools
+.vscode/
+.mypy_cache/
+.pytest_cache/
+
+# PyInstaller outputs
 build/
 dist/
-megaknob.spec
+
+# PlatformIO outputs
+firmware/.pio/
+
+# Local experiments
+python_app/pruebas/

@@ -19,10 +19,7 @@ build/
 dist/
 
 # PlatformIO outputs
-firmware/.pio/
+firmware
 
 # Local experiments
 python_app/pruebas/
-
-#firmware
-.firmware/

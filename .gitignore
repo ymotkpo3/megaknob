@@ -19,7 +19,7 @@ build/
 dist/
 
 # PlatformIO outputs
-firmware
+firmware/
 
 # Local experiments
 python_app/pruebas/
